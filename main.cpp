@@ -1,18 +1,19 @@
 #include <iostream>
 #include "generator.h"
-#include "sortowanie.h"
-#include "quicksort.h"
-
+#include"sortowanie.h"
 
 using namespace std;
 
 int main()
 {
-	generujDane(10); // tworzenie po 10 tablic za zadanych rozmiarach
-	wczytaj(10000, 2); // wczytanie 1 tablicy o rozmiarze 10
+	//generujDane(1); // tworzenie po 10 tablic za zadanych rozmiarach
+	
+	//cout << "------------------ Tablica o rozmiarze 10000 ---------------------" << endl;
+	wczytaj(10000, 1); //
 
-
-
+	//cout << endl << endl << "----------------- Tablica o rozmiarze 50000 ----------------------" << endl;
+	//wczytaj(50000, 1); // 
+	
 
 	system("pause");
 	return 0;
