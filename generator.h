@@ -40,7 +40,7 @@ void zapis(int* tablica, int rozmiar) // zapisywanie tablicy do pliku
 
 void generujDane(int ilosc) // ilosc - ile tablic o danym rozmiarze ma zostac utworzonych
 {
-	int rozmiartablicy[3] = {10, 50000, 100000};
+	int rozmiartablicy[3] = {10000, 50000, 100000};
 	int* tablica;
 
 	for (int i = 0; i < 3; i++)

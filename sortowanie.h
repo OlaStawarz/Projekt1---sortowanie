@@ -13,16 +13,25 @@ using namespace std;
 using tp = chrono::time_point<std::chrono::system_clock>;
 using duration = chrono::duration<float>;
 
+tp start;
+duration d;
 
 void zapiszczas(duration d)
 {
 	fstream plik;
-	string sciezka = "zapisczasu.txt"; // towrzenie pliku .txt
+	string sciezka = "zapisczasu.txt"; // tworzenie pliku .txt
 	plik.open(sciezka, fstream::out | fstream::app);
-	//plik << d;
-	plik << endl;
+	if (plik.is_open())
+	{
+		plik << d.count();
+		plik << endl;
+	}
+	else
+		cout << "Nie udalo sie zapisac do pliku";
+	
 	plik.close();
 }
+
 
 void sortowanie(int* tablica, int rozmiar)
 {
@@ -35,10 +44,7 @@ void sortowanie(int* tablica, int rozmiar)
 						"95% pierwszych elementow posortowane: ",
 						"99% pierwszych elementow posortowane: ",
 						"99.7% pierwszych elementow posortowane: " };
-	double czas;
-	int wybor;
-	tp start;
-	duration d;
+
 	for (int j = 0; j < 7; j++)
 	{
 		for (int i = 0; i < rozmiar; i++) {
@@ -53,32 +59,66 @@ void sortowanie(int* tablica, int rozmiar)
 		
 		start = chrono::system_clock::now(); 
 		quick_sort(pomocnicza, 0, rozmiar - 1); // tylko to mierzymy
+		/*for (int i = 0; i < rozmiar; i++) {
+			cout << pomocnicza[i] << " ";
+		}*/
 		d = chrono::system_clock::now() - start;
-		cout << d.count();
-		//zapiszczas(d.count);
+		cout << "Quicksort: " << d.count();
+		zapiszczas(d);
 		cout << endl;
 				
 		start = chrono::system_clock::now();
 		merge_sort(pomocnicza, 0, rozmiar - 1);
 		d = chrono::system_clock::now() - start;
-		cout << d.count();
+		cout << "Sortowanie przez scalanie: " << d.count();
 		cout << endl;
 		
 		start = chrono::system_clock::now();
 		IntroSort(pomocnicza, rozmiar);
 		d = chrono::system_clock::now() - start;
-		cout << d.count();
+		cout << "Sortowanie introspektywne: " << d.count() << endl;
 		cout << endl;
 	}
 	
-	
-	/*quick_sort(tablica, 0, rozmiar - 1);
+	cout << "Elementy w odwrotnej kolejnosci: " << endl;
+	quick_sort(tablica, 0, rozmiar - 1);
 	for (int i = 0; i < rozmiar; i++)
-		pomocnicza[(rozmiar-i)] = tablica[i];
-	for (int j = 0; j < rozmiar; j++)
-			cout << pomocnicza[j] << " ";*/
-
+	{
+		pomocnicza[(rozmiar-1-i)] = tablica[i];
+	}
 	
+	start = chrono::system_clock::now();
+	quick_sort(pomocnicza, 0, rozmiar - 1);
+	d = chrono::system_clock::now() - start;
+	cout << "Quicksort: " << d.count();
+	zapiszczas(d);
+	cout << endl;
+
+	for (int i = 0; i < rozmiar; i++)
+	{
+		pomocnicza[(rozmiar - 1 - i)] = tablica[i];
+	}
+
+	start = chrono::system_clock::now();
+	merge_sort(pomocnicza, 0, rozmiar - 1);
+	d = chrono::system_clock::now() - start;
+	cout << "Sortowanie przez scalanie: " << d.count();
+	zapiszczas(d);
+	cout << endl;
+
+	for (int i = 0; i < rozmiar; i++)
+	{
+		pomocnicza[(rozmiar - 1 - i)] = tablica[i];
+	}
+
+	start = chrono::system_clock::now();
+	IntroSort(pomocnicza, rozmiar);
+	d = chrono::system_clock::now() - start;
+	cout << "Sortowanie introspektywne: " << d.count();
+	zapiszczas(d);
+	cout << endl;
+
+
 
 	delete[] pomocnicza;
 
