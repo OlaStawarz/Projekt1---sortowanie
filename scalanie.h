@@ -3,7 +3,7 @@
 #include<iostream>
 using namespace std;
 
-void merge(int tablica[], int start, int srodek, int koniec)
+void merge(int* tablica, int start, int srodek, int koniec)
 {
 	int *tab_pom = new int[(koniec - start)]; // utworzenie tablicy pomocniczej
 	int i = start, j = srodek + 1, k = 0; // zmienne pomocnicze
@@ -50,7 +50,7 @@ void merge(int tablica[], int start, int srodek, int koniec)
 	//	cout << "tablica[" << i << "] = " << tablica[i] << endl;
 }
 
-void merge_sort(int tablica[], int start, int koniec)
+void merge_sort(int* tablica, int start, int koniec)
 {
 	int srodek;
 

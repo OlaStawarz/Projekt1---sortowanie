@@ -6,10 +6,10 @@
 
 using namespace std;
 
-template <class var>
-int* generujTablice(int rozmiar) // tworzenie tablicy dynamicznej o zadanym rozmiarze
+template <class tab>
+int* generujTablice(int rozmiar) // generowanie tablicy o zadanym rozmiarze
 {
-	int* tablica = new int[rozmiar];
+	int* tablica = new int[rozmiar]; 
 
 	if (tablica == nullptr) // zabezpieczenie przed wpisaniem zerowej wartosci
 	{
@@ -18,7 +18,7 @@ int* generujTablice(int rozmiar) // tworzenie tablicy dynamicznej o zadanym rozm
 
 	for (int i = 0; i < rozmiar; i++)
 	{
-		tablica[i] = (rand() % 1000 + 1); // jaki przyjac zakres??
+		tablica[i] = (rand() % 1000 + 1); // przyjêto zakes od 0 do 1000
 	}
 
 	return tablica;
@@ -27,7 +27,7 @@ int* generujTablice(int rozmiar) // tworzenie tablicy dynamicznej o zadanym rozm
 void zapis(int* tablica, int rozmiar) // zapisywanie tablicy do pliku
 {
 	fstream plik;
-	string sciezka = to_string(rozmiar) + ".txt"; // towrzenie pliku .txt o nazwie rownej rozmiarowi
+	string sciezka = to_string(rozmiar) + ".txt"; // tworzenie pliku .txt o nazwie rownej rozmiarowi
 	plik.open(sciezka, fstream::out | fstream::app);
 
 	for (int i = 0; i < rozmiar; i++)
@@ -38,12 +38,12 @@ void zapis(int* tablica, int rozmiar) // zapisywanie tablicy do pliku
 	plik.close();
 }
 
-void generujDane(int ilosc) // ilosc - ile tablic o danym rozmiarze ma zostac utworzonych
+void generujDane(int ilosc) // ile tablic o danym rozmiarze ma zostac utworzonych
 {
-	int rozmiartablicy[3] = {10000, 50000, 100000};
+	int rozmiartablicy[5] = {10000, 50000, 100000, 500000, 1000000};
 	int* tablica;
 
-	for (int i = 0; i < 3; i++)
+	for (int i = 0; i < 5; i++)
 	{
 		for (int j = 0; j < ilosc; j++)
 		{
@@ -52,7 +52,6 @@ void generujDane(int ilosc) // ilosc - ile tablic o danym rozmiarze ma zostac ut
 
 		}
 	}
-	//delete[] tablica;
 }
 
 

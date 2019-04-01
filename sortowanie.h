@@ -16,7 +16,9 @@ using duration = chrono::duration<float>;
 tp start;
 duration d;
 
-void zapiszczas(duration d)
+/* Zmienne tp i duration to zmienne z biblioteki chrono, pozwalaj¹cej mierzyæ czas z wiêksz¹ dok³adnoœci¹ */
+
+void zapiszczas(duration d) // zapisz czasu do pliku
 {
 	fstream plik;
 	string sciezka = "zapisczasu.txt"; // tworzenie pliku .txt
@@ -28,10 +30,9 @@ void zapiszczas(duration d)
 	}
 	else
 		cout << "Nie udalo sie zapisac do pliku";
-	
+
 	plik.close();
 }
-
 
 void sortowanie(int* tablica, int rozmiar)
 {
@@ -50,49 +51,53 @@ void sortowanie(int* tablica, int rozmiar)
 		for (int i = 0; i < rozmiar; i++) {
 			pomocnicza[i] = tablica[i];
 		}
-		quick_sort(pomocnicza, 0, rozmiar*stopnie[j] - 1); //przygotowanie tablicy
-		/*for (int i = 0; i < rozmiar; i++) {
-			cout << pomocnicza[i] << " ";
-		}*/
-		
+		quick_sort(pomocnicza, 0, rozmiar*stopnie[j] - 1); //przygotowanie tablicy, okreœlenie procentu wstêpnego posortowania, quicksort sortuje tablice
+		                                                   // dla podanego parametru
+
 		cout << nazwy[j] << endl;
-		
-		start = chrono::system_clock::now(); 
-		quick_sort(pomocnicza, 0, rozmiar - 1); // tylko to mierzymy
-		/*for (int i = 0; i < rozmiar; i++) {
-			cout << pomocnicza[i] << " ";
-		}*/
+
+		start = chrono::system_clock::now(); // algorytm quicksort
+		quick_sort(pomocnicza, 0, rozmiar - 1); 
 		d = chrono::system_clock::now() - start;
 		cout << "Quicksort: " << d.count();
 		zapiszczas(d);
 		cout << endl;
-				
-		start = chrono::system_clock::now();
+
+		start = chrono::system_clock::now(); // algorytm mergesort
 		merge_sort(pomocnicza, 0, rozmiar - 1);
 		d = chrono::system_clock::now() - start;
 		cout << "Sortowanie przez scalanie: " << d.count();
+		zapiszczas(d);
 		cout << endl;
-		
-		start = chrono::system_clock::now();
+
+		start = chrono::system_clock::now(); // algorytm introsort
 		IntroSort(pomocnicza, rozmiar);
 		d = chrono::system_clock::now() - start;
 		cout << "Sortowanie introspektywne: " << d.count() << endl;
+		zapiszczas(d);
 		cout << endl;
-	}
 	
+	}
+}
+
+void sortowanie_odwrotne(int* tablica, int rozmiar) // wariant wstêpnego posortowania elementów w odwrotnej kolejnoœci
+{
+	int* pomocnicza = new int[rozmiar];
+
 	cout << "Elementy w odwrotnej kolejnosci: " << endl;
-	quick_sort(tablica, 0, rozmiar - 1);
+	quick_sort(tablica, 0, rozmiar - 1); // sortowanie elementów w odwrotnej kolejnoœci
 	for (int i = 0; i < rozmiar; i++)
 	{
-		pomocnicza[(rozmiar-1-i)] = tablica[i];
+		pomocnicza[(rozmiar - 1 - i)] = tablica[i];
 	}
-	
+
 	start = chrono::system_clock::now();
 	quick_sort(pomocnicza, 0, rozmiar - 1);
 	d = chrono::system_clock::now() - start;
 	cout << "Quicksort: " << d.count();
 	zapiszczas(d);
 	cout << endl;
+
 
 	for (int i = 0; i < rozmiar; i++)
 	{
@@ -117,15 +122,9 @@ void sortowanie(int* tablica, int rozmiar)
 	cout << "Sortowanie introspektywne: " << d.count();
 	zapiszczas(d);
 	cout << endl;
-
-
-
-	delete[] pomocnicza;
-
 }
 
-
-void wczytaj(int rozmiar, int ilosc)
+void wczytaj(int rozmiar, int ilosc) // funkcja wczytuj¹ca tablice z pliku oraz odpowiadaj¹ca za sortowanie
 {
 	int* tablica = new int[rozmiar];
 	fstream plik;
@@ -138,7 +137,8 @@ void wczytaj(int rozmiar, int ilosc)
 			plik >> tablica[i];
 		}
 		cout << endl;
-		sortowanie(tablica, rozmiar);
+		sortowanie(tablica, rozmiar); // sortowanie 
+		sortowanie_odwrotne(tablica, rozmiar); // sortowanie elementów w odwrotnej kolejnoœci
 	}
 
 	plik.close();
@@ -146,3 +146,4 @@ void wczytaj(int rozmiar, int ilosc)
 }
 
 #endif SORTOWANIE_H
+
